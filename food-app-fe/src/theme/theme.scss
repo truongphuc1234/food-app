@@ -1,9 +1,9 @@
-@import '~@angular/material/theming';
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-
-$theming-material-components-primary: mat-palette($mat-deep-orange);
-$theming-material-components-accent: mat-palette($mat-lime, A200, A100, A400);
-$theming-material-components-warn:mat-palette($mat-red);
+@import '../../node_modules/@angular/material/theming';
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+$theming-material-components-primary: mat-palette($mat-red);
+$theming-material-components-accent: mat-palette($mat-cyan);
+$theming-material-components-warn: mat-palette($mat-lime);
 
 $theming-material-components-theme: mat-light-theme(
     $theming-material-components-primary,
@@ -11,12 +11,13 @@ $theming-material-components-theme: mat-light-theme(
     $theming-material-components-warn
 );
 
-$heading-font-family: "'Montserrat', sans-serif";
+$heading-font-family: 'Raleway', sans-serif;
+$normal-font-family: 'Open Sans', sans-serif;
 $typography: mat-typography-config(
   $display-4: mat-typography-level(112px, $font-family: $heading-font-family),
   $display-3: mat-typography-level(56px, $font-family: $heading-font-family),
   $display-2: mat-typography-level(45px, $font-family: $heading-font-family),
   $display-1: mat-typography-level(34px, $font-family: $heading-font-family),
   $headline: mat-typography-level(24px, $font-family: $heading-font-family),
-  $title: mat-typography-level(20px, $font-family: $heading-font-family),
+  $font-family: $normal-font-family
 );

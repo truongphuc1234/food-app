@@ -1,0 +1,143 @@
+<mat-card class="food-card" fxLayout="column" fxLayoutAlign="center">
+  <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center" fxLayoutGap="40px">
+    <img class="food-image" mat-card-image [src]="this.foodDetail?.food.foodImage" alt="..."
+         fxFlex="30%">
+    <div fxLayout="column" fxFlex="60%">
+      <mat-card-content>
+        <mat-chip-list aria-label="Fish selection">
+          <mat-chip color="accent" selected
+                    *ngFor="let category of this.foodDetail?.categories">{{category.categoryName}}</mat-chip>
+        </mat-chip-list>
+      </mat-card-content>
+      <mat-card-content>
+        <mat-card-title>{{this.foodDetail?.food.foodName}}</mat-card-title>
+        <mat-card-subtitle>
+          <p>{{this.foodDetail?.food.foodDescription}}</p>
+        </mat-card-subtitle>
+      </mat-card-content>
+      <mat-card-content>
+        <div>
+          <button mat-button color="accent" (click)="isRatingOpen = !isRatingOpen" type="button" cdkOverlayOrigin
+                  #ratingTrigger="cdkOverlayOrigin">
+            <mat-icon>star</mat-icon>
+            {{this.foodDetail?.foodSummary.ratingAverage | number: '0.1'}}
+            / {{this.foodDetail?.foodSummary.totalRating}}
+          </button>
+          <button mat-button color="accent">
+            <mat-icon>reviews</mat-icon>
+            {{this.foodDetail?.foodSummary.totalComment | number: '0.0'}}
+          </button>
+          <button mat-button color="accent">
+            <mat-icon>shopping_bag</mat-icon>
+            {{this.foodDetail?.foodSummary.totalOrder ? (this.foodDetail?.foodSummary.totalOrder | number: '0.0') : "0"}}
+          </button>
+        </div>
+      </mat-card-content>
+      <mat-card-content>
+        <p class="old-price" *ngIf="this.foodDetail?.food.discount >0 ">{{this.foodDetail?.food.foodPrice}}<span
+          class="money-symbol">đ</span></p>
+        <span class="price">{{this.foodDetail?.food.foodPrice * (1 + this.foodDetail?.food.discount / 100)}}<span
+          class="money-symbol">đ</span></span><span class="discount" *ngIf="this.foodDetail?.food.discount">(<mat-icon
+        class="discount-icon">sell</mat-icon>
+        {{this.foodDetail?.food.discount}} %)</span>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="isAddCartOpen = !isAddCartOpen" type="button"
+                cdkOverlayOrigin
+                #addCartTrigger="cdkOverlayOrigin">
+          <mat-icon>shopping_cart</mat-icon>
+          Add to cart
+        </button>
+      </mat-card-actions>
+    </div>
+  </div>
+  <div fxFlex="100%">
+    <mat-tab-group dynamicHeight>
+      <mat-tab label="Comment">
+        <mat-card *ngIf="this.tokenStorageService.isLogged()">
+          <mat-card-header>
+            <div mat-card-avatar
+                 [style]="'background-image: url('+ this.account?.customer?.customerAvatar+'); background-size: cover;'"></div>
+            <mat-card-subtitle>{{this.account?.customer?.customerName}}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-form-field class="comment-textarea">
+              <mat-label>Leave a comment</mat-label>
+              <textarea matInput [formControl]="commentForm"></textarea>
+              <button mat-icon-button matSuffix class="button-image" color="accent" (click)="fileInput.click()">
+                <mat-icon>image</mat-icon>
+              </button>
+            </mat-form-field>
+            <input hidden #fileInput (change)="showImage($event)" type="file" id="file">
+          </mat-card-content>
+          <img mat-card-image [src]="this.imageCommentUrl" style="width: 300px; height: auto">
+          <mat-card-content>
+            <button mat-raised-button color="accent" class="comment-button" (click)="submitComment()">Comment</button>
+          </mat-card-content>
+        </mat-card>
+        <mat-card *ngFor="let comment of commentList">
+          <mat-card-header>
+            <div mat-card-avatar
+                 [style]="'background-image: url('+ comment.account?.customer?.customerAvatar +');background-size: cover;'"></div>
+            <mat-card-subtitle>{{comment.account?.customer?.customerName}}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{comment.commentContent}}</p>
+            <img *ngIf="comment.commentImage" [src]="comment.commentImage" style="max-width: 300px">
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</mat-card>
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="ratingTrigger"
+  [cdkConnectedOverlayOpen]="isRatingOpen"
+>
+  <div class="background-rating" fxLayout="row" fxLayoutAlign="center center">
+    <mat-icon [attr.data-index]="1" (click)="setRating($event)" class="star-rating"
+              [ngClass]="this.rating >= 1? 'select-rating':''">star
+    </mat-icon>
+    <mat-icon [attr.data-index]="2" (click)="setRating($event)" class="star-rating"
+              [ngClass]="this.rating >= 2? 'select-rating':''">star
+    </mat-icon>
+    <mat-icon [attr.data-index]="3" (click)="setRating($event)" class="star-rating"
+              [ngClass]="this.rating >= 3? 'select-rating':''">star
+    </mat-icon>
+    <mat-icon [attr.data-index]="4" (click)="setRating($event)" class="star-rating"
+              [ngClass]="this.rating >= 4? 'select-rating':''">star
+    </mat-icon>
+    <mat-icon [attr.data-index]="5" (click)="setRating($event)" class="star-rating"
+              [ngClass]="this.rating >= 5? 'select-rating':''">star
+    </mat-icon>
+    <button mat-button color="accent" [disabled]="this.rating == 0" (click)="submitRating()">
+      Rate!
+    </button>
+  </div>
+</ng-template>
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="addCartTrigger"
+  [cdkConnectedOverlayOpen]="isAddCartOpen"
+>
+  <div class="background-rating" fxLayout="row" fxLayoutAlign="center center">
+    <button mat-icon-button color="accent">
+      <mat-icon>remove</mat-icon>
+    </button>
+    <mat-form-field appearance="standard" class="quantity-input">
+      <mat-label>Quantity</mat-label>
+      <input matInput type="text" [(ngModel)]="quantity">
+      <button *ngIf="quantity > 0" matSuffix mat-icon-button aria-label="Clear" (click)="quantity=0">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <button mat-icon-button color="accent">
+      <mat-icon>add</mat-icon>
+    </button>
+    <button mat-icon-button color="primary">
+      <mat-icon>done</mat-icon>
+    </button>
+  </div>
+</ng-template>
+

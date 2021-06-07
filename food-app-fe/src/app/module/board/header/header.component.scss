@@ -1,8 +1,42 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lemonada&display=swap');
 
-.brand-name {
-  font-family: Caveat, serif;
-  font-size: 30px;
-  font-weight: bolder;
-  font-style: italic;
+.navbar {
+  padding: 0;
+
+  button {
+    font-weight: bolder;
+    height: 100%;
+  }
+
+  #logo {
+    font-weight: normal;
+    font-size: 25px;
+    font-family: Lemonada, cursive;
+    margin-right: 30px;
+  }
+
+  mat-form-field {
+    width: 120px;
+    height: 60%;
+  }
+
 }
+
+.avatar {
+  background-size: cover;
+  width: 36px;
+  height: 36px;
+  border: 1px #ffebee;
+  border-radius: 50%;
+  padding: 1px;
+}
+
+.account-container {
+  padding: 10px;
+  &:hover {
+    background-color: #e53935 ;
+  }
+}
+
+
+

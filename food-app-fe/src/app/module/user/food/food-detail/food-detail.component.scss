@@ -1,0 +1,68 @@
+.food-image {
+  object-fit: contain;
+}
+
+.food-card {
+  padding: 50px;
+}
+
+.price {
+  font-size: 30px;
+  color: #00acc1;
+  margin-bottom: 0 !important;
+}
+
+.old-price {
+  font-size: 16px !important;
+  text-decoration: line-through;
+  color: #b71c1c;
+}
+
+.background-rating {
+  margin-top: 5px;
+  background: #ffebee;
+  border-radius: 10px;
+}
+
+.star-rating {
+  color: #ef9a9a;
+  cursor: pointer;
+  user-select: none;
+}
+
+.select-rating {
+  color: #00bcd4;
+}
+
+.quantity-input {
+  width: 100px;
+}
+
+.comment-textarea {
+  width: 100%;
+  height: 50px;
+}
+
+.comment-button {
+  margin-top: 20px;
+}
+
+.button-image {
+  width: 50px;
+  height: 50px;
+}
+
+.money-symbol {
+  font-size: 14px !important;
+  vertical-align: text-top !important;
+}
+
+.discount {
+  font-size: 20px;
+  margin-left: 10px;
+  color: #006064;
+}
+
+.discount-icon {
+  vertical-align: text-bottom;
+}

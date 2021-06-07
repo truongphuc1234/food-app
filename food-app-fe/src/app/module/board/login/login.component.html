@@ -1,0 +1,35 @@
+<h1 mat-dialog-title class="login-title">Login</h1>
+<div class="container-login" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+  <form [formGroup]="formLogin" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <mat-icon matPrefix>person</mat-icon>
+      <input type="text" matInput placeholder="Type your username" formControlName="accountName">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input type="password" matInput placeholder="Type your password" formControlName="password">
+      <mat-icon matPrefix>lock</mat-icon>
+    </mat-form-field>
+    <mat-checkbox color="primary" formControlName="remember">Remember Me?</mat-checkbox>
+  </form>
+  <div fxLayout="row" fxLayoutAlign="end start">
+    <a class="small-para">Forgot password ?</a>
+  </div>
+  <button mat-raised-button color="accent" (click)="login()">LOGIN</button>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <span class="small-para">or sign up with</span>
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <button mat-icon-button>
+        <fa-icon [icon]="faFacebook" id="logo-facebook"></fa-icon>
+      </button>
+      <button mat-icon-button>
+        <fa-icon [icon]="faGoogle" id="logo-google"></fa-icon>
+      </button>
+    </div>
+  </div>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <span class="small-para">don't have an account ?</span>
+    <button mat-stroked-button color="accent">SIGN UP</button>
+  </div>
+</div>

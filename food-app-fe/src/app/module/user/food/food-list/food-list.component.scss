@@ -1,0 +1,59 @@
+.food-card {
+  mat-card-content {
+    mat-card-title {
+      font-size: 18px;
+    }
+  }
+
+  mat-card-actions {
+    margin-bottom: 0 !important;
+  }
+
+  &:hover {
+    transform: scale(1.02);
+  }
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.list-food {
+  margin: 20px;
+}
+
+.food-image {
+  margin-bottom: 0 !important;
+}
+
+.form-search {
+  margin: 15px;
+}
+
+
+.slice-result-card .slice-label-container.slice-label-horizontal {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 12px 16px;
+  max-width: 284px;
+}
+
+.slice-result-card .slice-value-label {
+  font-weight: 600;
+}
+
+.button-search {
+  margin: 32px 32px;
+}
+
+.container {
+  min-height: calc(100vh - 128px);
+}
+
+.side-search {
+  width: 20%;
+}
+
+.search-label {
+  margin: 12px 0 ;
+  text-align: center;
+  font-style: italic;
+}

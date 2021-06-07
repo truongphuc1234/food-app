@@ -1,0 +1,95 @@
+<mat-drawer-container class="container">
+  <mat-drawer #drawer class="side-search" mode="over" color="primary">
+    <form [formGroup]="formSearch" fxLayout="column" class="form-search">
+      <h4 class="search-label">Choose food name:</h4>
+      <mat-form-field appearance="standard" color="accent">
+        <input matInput formControlName="name">
+      </mat-form-field>
+      <mat-divider></mat-divider>
+      <h4 class="search-label">Choose your price:</h4>
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <label>From:</label>
+        <label *ngIf="this.formSearch.controls.lowPrice.value">{{this.formSearch.controls.lowPrice.value| number:'.0'}}
+          đ</label>
+      </div>
+      <mat-slider
+        formControlName="lowPrice"
+        class="example-margin"
+        thumbLabel
+        [displayWith]="formatLabel"
+        tickInterval="1000"
+        step="1000"
+        min="0"
+        max="999000">
+      </mat-slider>
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <label>To:</label>
+        <label
+          *ngIf="this.formSearch.controls.highPrice.value">{{this.formSearch.controls.highPrice.value | number:'.0'}}
+          đ</label>
+      </div>
+      <mat-slider
+        formControlName="highPrice"
+        class="example-margin"
+        thumbLabel
+        [displayWith]="formatLabel"
+        tickInterval="1000"
+        step="1000"
+        min="0"
+        max="999000">
+      </mat-slider>
+      <mat-divider></mat-divider>
+      <h4 class="search-label">Choose categories</h4>
+      <mat-checkbox *ngFor="let category of this.categoryList" color="accent"
+                    [checked]="isCheckedCategory(category.categoryId)"
+                    (change)="toggleCategoryForm($event)" [value]="category.categoryId">
+        {{category.categoryName}}
+      </mat-checkbox>
+      <button mat-stroked-button color="primary" (click)="searchByQuery()">Search</button>
+    </form>
+  </mat-drawer>
+  <mat-drawer-content>
+    <button mat-raised-button (click)="drawer.toggle()" color="accent" class="button-search">Search</button>
+    <div fxLayout="row wrap" fxLayoutGap="2rem" class="list-food">
+      <mat-card class="food-card" *ngFor="let food of foodList" fxLayout="column" fxLayoutAlign="space-between"
+                fxFlex.lt-sm="100%"
+                fxFlex.lt-md="0 1 calc(50%-32px)"
+                fxFlex.lt-lg="0 1 calc(25%-32px)"
+                fxFlex.lt-xl="0 1 calc(20%-32px)"
+                fxFlex="0 1 calc(16.6%-32px)">
+        <div>
+          <img mat-card-image class="food-image" [src]="food.foodImage" alt="...">
+          <mat-card-actions>
+            <mat-chip-list>
+              <mat-chip color="primary" selected class="small-chip">{{food.foodPrice}} đ</mat-chip>
+              <mat-chip *ngIf="food.discount> 0" color="accent" selected class="small-chip">
+                <mat-icon class="price-tag">sell</mat-icon>
+                {{food.discount}}%
+              </mat-chip>
+            </mat-chip-list>
+          </mat-card-actions>
+          <mat-card-content>
+            <mat-card-title>{{food.foodName}}</mat-card-title>
+            <mat-card-subtitle>{{food.foodDescription}}</mat-card-subtitle>
+          </mat-card-content>
+        </div>
+        <mat-card-footer>
+          <button mat-icon-button color="primary">
+            <mat-icon>star</mat-icon>
+          </button>
+          <button mat-icon-button color="primary">
+            <mat-icon>add_circle</mat-icon>
+          </button>
+          <button mat-icon-button color="primary">
+            <mat-icon>info</mat-icon>
+          </button>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+    <mat-paginator [length]="length"
+                   [pageSize]="pageSize"
+                   [pageSizeOptions]="pageSizeOptions" color="primary"
+                   (page)=updatePagination($event)>
+    </mat-paginator>
+  </mat-drawer-content>
+</mat-drawer-container>

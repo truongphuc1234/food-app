@@ -1,20 +1,38 @@
-<mat-toolbar color="primary">
-  <button mat-button class="brand-name">
+<mat-toolbar color="primary" class="navbar" fxLayout="row" fxLayoutAlign="space-between stretch">
+  <button mat-button class="brand-name" id="logo">
     <img src="assets/image/logo.png" style="height: 30px; vertical-align:baseline" alt="...">
     Phuc's Food
   </button>
-  <mat-form-field appearance="fill">
-    <input type="text"
-           placeholder="Search for a street"
-           [formControl]="control"
-           [matAutocomplete]="auto">
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let street of filteredStreets | async" [value]="street">
-        {{street}}
-      </mat-option>
-    </mat-autocomplete>
-    <mat-select [formControl]="citySelect">
-      <mat-option *ngFor="let city of cityList" [value]="city.id">{{city.name}}</mat-option>
-    </mat-select>
-  </mat-form-field>
+  <div fxLayout="row" fxLayoutAlign="space-between stretch">
+    <div>
+      <button mat-button class="brand-name">
+        <mat-icon>menu_book</mat-icon>
+        Menu
+      </button>
+      <button mat-button class="brand-name" *ngIf="tokenStorageService.isLogged()">
+        <mat-icon>shopping_cart</mat-icon>
+        Cart
+      </button>
+      <button mat-button class="brand-name" *ngIf="tokenStorageService.isLogged()">
+        <mat-icon>local_mall</mat-icon>
+        Order
+      </button>
+      <button mat-button class="brand-name" (click)="openDialog()" *ngIf="!tokenStorageService.isLogged()">
+        <mat-icon>login</mat-icon>
+        Login
+      </button>
+      <button mat-button class="brand-name" (click)="logout()" *ngIf="tokenStorageService.isLogged()">
+        <mat-icon>logout</mat-icon>
+        Logout
+      </button>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" matRipple [matRippleColor]="'rgba(255, 235, 238, 0.15)'"
+         class="account-container" *ngIf="tokenStorageService.isLogged()">
+      <div class="avatar"
+           [style]="'background-image: url('+this.account?.customer?.customerAvatar+'); background-size: cover;'"></div>
+      <div style="margin-left:10px;font-size: 14px; font-weight: bold">
+        {{this.account?.customer?.customerName}}
+      </div>
+    </div>
+  </div>
 </mat-toolbar>
